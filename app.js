@@ -1,6 +1,7 @@
 const MIN_PAREJAS = 4;
 const MAX_PAREJAS = 12;
 const CLAVE = 'parejas.partida'; // única clave que usa la aplicación
+let cartas = []; // las cartas de la partida actual (global, para usarlas desde la consola)
 
 /**
 
@@ -124,11 +125,9 @@ function iniciarPartida() {
   console.log(`${partida.numParejas} parejas, ${partida.cartas.length} cartas`);
   console.log(secuencia.trim());
 
-  mostrarTabla(partida.cartas);
-  ocultarCartas(partida.cartas);
-  
-
-
+  cartas = partida.cartas;
+  ocultarCartas(cartas);
+  mostrarTabla(cartas);
 }
 
 
@@ -142,19 +141,15 @@ function ocultarCartas(cartas) {
 }
 
 
-// Función que eligiendo la columna y la fila, revela el numero por consola 
-
-
-
-
-function revelarCarta(cartas, fila, columna) {;
+// Función que, eligiendo la fila y la columna, revela la carta (en la tabla y por consola)
+// Uso desde la consola: revelarCarta(2, 3)
+function revelarCarta(fila, columna) {
+  const columnas = Math.floor(Math.sqrt(cartas.length));
   const posicion = (fila - 1) * columnas + (columna - 1);
-  console.log(cartas[posicion]);
+  cartas[posicion].descubierta = true;
+  console.log(cartas[posicion].numero);
+  mostrarTabla(cartas);
 }
-
-
-
-
 
 //Iniciar parida y ocultar las cartas o mostar la tabla
 iniciarPartida();
@@ -190,12 +185,12 @@ function guardar(clave, valor) {
 
 
 /**
- * Lee el valor guardado (no comprueba si está dañado).
- * @param {string} clave - Nombre con el que se guardó.
+ * Lee el valor guardado.
+ * @param {string} clave - clave con la que se guardó.
  * @param {unknown} porDefecto - Valor que se devuelve si no hay nada guardado.
  * @returns {unknown}
  */
 function cargar(clave, porDefecto) {
   const texto = localStorage.getItem(clave);
-  return texto === null ? porDefecto : JSON.parse(texto);
+  return texto == null ? porDefecto : JSON.parse(texto);
 }
