@@ -157,8 +157,9 @@ iniciarPartida();
 
 
 
-
-
+/* la carta va a ser observada para un contador de clicks, pero si le das la vuelta hacia abajo no se suma. Tiene que ser SINGLETON 
+tambien se tiene que guardar ese contador en el almacenaje
+*/
 
 
 
@@ -181,6 +182,8 @@ function guardar(clave, valor) {
     return false;
   }
 }
+//agregar que cuando se revele la carta, que no se vuelva a ocultar cuando se inicie la partida otra vez
+
 
 
 
